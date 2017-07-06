@@ -1,7 +1,12 @@
 #!/bin/bash
-curl -sL https://deb.nodesource.com/setup_6.x > nodesource.sh
-sudo chmod 777 nodesource.sh
-sudo ./nodesource.sh
-sudo apt-get install -y nodejs
+echo 'export PATH=$HOME/local/bin:$PATH' >> ~/.bashrc
+. ~/.bashrc
+mkdir ~/local
+mkdir ~/node-latest-install
+cd ~/node-latest-install
+curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
+./configure --prefix=~/local
+make install # ok, fine, this step probably takes more than 30 seconds...
+curl https://www.npmjs.org/install.sh | sh
 sudo npm install -g forever
 forever start ./app.js
